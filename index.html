@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>Firebase Studio 2030 Style - YouTube Tab Opener</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #121212;
+      color: #FFB74D;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .container {
+      background: #1E1E1E;
+      border-radius: 16px;
+      box-shadow:
+        0 0 15px #FF6F00AA,
+        inset 0 0 10px #FF6F0020;
+      padding: 40px 50px;
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .container:hover {
+      box-shadow:
+        0 0 30px #FF6F00DD,
+        inset 0 0 20px #FF6F0040;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 2.25rem;
+      margin-bottom: 30px;
+      color: #FFB74D;
+      text-shadow: 0 0 6px #FF6F00;
+      letter-spacing: 1.2px;
+      user-select: text;
+    }
+
+    label {
+      width: 100%;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #FFB74DCC;
+      user-select: none;
+    }
+
+    input[type="url"],
+    input[type="number"] {
+      width: 100%;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: none;
+      background: #2E2E2E;
+      color: #FFB74D;
+      font-size: 1rem;
+      box-shadow:
+        inset 0 0 6px #FF6F0055;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      outline: none;
+    }
+
+    input[type="url"]::placeholder,
+    input[type="number"]::placeholder {
+      color: #FFB74D99;
+    }
+
+    input[type="url"]:focus,
+    input[type="number"]:focus {
+      background: #3C2F0A;
+      box-shadow:
+        0 0 8px #FF6F00,
+        inset 0 0 12px #FF6F00AA;
+      color: #fff4e5;
+    }
+
+    button {
+      padding: 16px 0;
+      width: 100%;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #FFF3E0;
+      background: linear-gradient(90deg, #FF6F00, #FFB74D);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #FF6F00CC;
+      text-shadow: 0 0 4px #FF6F0055;
+      transition: box-shadow 0.4s ease, transform 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      box-shadow: 0 0 30px #FF6F00FF, 0 0 40px #FFB74DCC;
+      transform: scale(1.03);
+    }
+
+    button:active {
+      transform: scale(0.98);
+      box-shadow: 0 0 20px #FF6F0077;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 0.85rem;
+      color: #FFB74D88;
+      letter-spacing: 1.1px;
+      user-select: none;
+    }
+
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-label="YouTube Tab Opener">
+    <h1>🔥 YouTube Tab Opener</h1>
+    
+    <label for="youtubeUrl">YouTube Video URL</label>
+    <input
+      id="youtubeUrl"
+      type="url"
+      placeholder="https://youtube.com/watch?v=..."
+      aria-required="true"
+      aria-describedby="urlHelp"
+    />
+    
+    <label for="tabCount">Number of Tabs (max 50)</label>
+    <input
+      id="tabCount"
+      type="number"
+      placeholder="1 - 50"
+      min="1"
+      max="50"
+      aria-required="true"
+      aria-describedby="countHelp"
+    />
+    
+    <button onclick="openTabs()">Open Tabs</button>
+    
+    <div class="footer" id="urlHelp">Enter the full YouTube video URL.</div>
+    <div class="footer" id="countHelp">Select how many tabs you want to open (up to 50).</div>
+  </main>
+
+  <script>
+    function openTabs() {
+      const url = document.getElementById('youtubeUrl').value.trim();
+      const count = parseInt(document.getElementById('tabCount').value);
+
+      if (!url || !url.startsWith('http') || isNaN(count) || count < 1 || count > 50) {
+        alert('Please enter a valid YouTube URL and choose a number between 1 and 50.');
+        return;
+      }
+
+      for (let i = 0; i < count; i++) {
+        const proxyUrl = `/api/proxy?url=${encodeURIComponent(url)}`;
+        window.open(proxyUrl, '_blank');
+      }
+    }
+  </script>
+</body>
+</html>
